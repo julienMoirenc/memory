@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Memory</title>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+        integrity="sha256-4+XzXVhsDmqanXGHaHvgh1gMQKX40OUvDEBTu8JcmNs=" crossorigin="anonymous" defer></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="assets/js/memory.js" defer></script>
+    <link href="assets/css/style.css" rel="stylesheet">
+</head>
+
+<body>
+    <div class="app-memory">
+        <div class="state-game view">
+            <div class="container">
+                <h2 class="container__title">
+                    Jeu de mémoire
+                </h2>
+                <div class="container__body">
+                    <div class="game-board"></div>
+                </div>
+            </div>
+            <div class="timer">
+                <div class="timer__outline">
+                    <div class="timer__scrollbar"></div>
+                </div>
+            </div>
+            <div class="message">
+                <div class="message__message">
+                </div>
+                <div class="message__buttons">
+                    <button class="message__button-menu">Retour au menu</button>
+                    <button class="message__button-shootagain">Rejouer</button>
+                </div>
+            </div>
+        </div>
+        <div class="state-menu view">
+            <div class="container">
+                <h2 class="container__title">
+                    Jeu de mémoire
+                </h2>
+                <div class="container__body">
+                    <div class="best-scores">
+                        <h3 class="best-scores__title">Meilleurs temps</h3>
+                        <div class="best-scores__scores"></div>
+                        <button>Jouer</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

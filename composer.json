@@ -1,0 +1,21 @@
+{
+  "name": "jul/memory",
+  "description": "memory game",
+  "type": "project",
+  "authors": [{
+    "name": "Julien MOIRENC",
+    "email": "julien.moirenc@gmail.com"
+  }],
+  "minimum-stability": "dev",
+  "require": {
+    "slim/slim": "^4.4",
+    "slim/psr7": "^1",
+    "slim/php-view": "^3",
+    "php-di/slim-bridge": "^3.0.1"
+  },
+  "autoload": {
+    "psr-4": {
+      "App\\": "src/"
+    }
+  }
+}

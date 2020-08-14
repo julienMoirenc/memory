@@ -1,0 +1,251 @@
+// custom break point size (used to show how to manage it in sass)
+$screen-md-max: 910px;
+
+// media query implementation example with a sass mixin
+@mixin md {
+    @media (max-width: #{$screen-md-max}) {
+        @content;
+    }
+}
+
+//let declare some variable to easily custom color theme
+$title-background-color: #eeeeee;
+$title-color: #000000;
+
+$body-background-color: #fafafa;
+$body-color: #000000;
+
+$memory-background-color: #dddbff;
+
+/*
+let declare a list of all the available fruit
+the list is used to show how to dynamicaly generate css rules with a sass each loop
+*/
+$fruits: "redapple",
+"banana",
+"orange",
+"greenlime",
+"pomegranate",
+"apricot",
+"lime",
+"strawberry",
+"greenapple",
+"peach",
+"grape",
+"watermelon",
+"plum",
+"pear",
+"cherry",
+"rasperry",
+"mango",
+"whitecherry";
+
+/*
+let do some really basic reset
+*/
+body,
+html {
+    margin: 0;
+}
+
+.view {
+    display: none;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+/*
+here, we use flexbox to center / center the page content
+.app-memory element take a 100% of the viewport height and width so its unique visible child is fully centered
+*/
+.app-memory {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    height: 100vh;
+}
+
+/*
+let declare of a container block used both in the game and menu view 
+bem style class name are used to prevent 'property collisions'
+*/
+.container {
+    width: 900px;
+
+    /*
+    last part of a sass way to manage media query.
+    here we only use one size as 28 is not a so good number to divide...
+    by the way, 'le client est roi ;-)'
+    */
+    @include md {
+        width: 310px;
+    }
+
+    .container__title {
+        color: $title-color;
+        background-color: $title-background-color;
+        text-align: center;
+        font-size: 24px;
+        padding: 10px 0;
+        margin: 0;
+    }
+
+    .container__body {
+        color: $body-color;
+        background-color: $body-background-color;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+}
+
+
+/*
+game board block and childs
+we also use sass nested element syntax
+see example below (ul element)
+*/
+.game-board {
+    background-color: $memory-background-color;
+    width: 780px;
+    margin: 30px;
+
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+
+    /*
+    here we are nesting a ul into a .game-board
+    it leads to generate a '.game-board ul' rule in the target css
+    */
+    ul {
+        padding: 0;
+        margin: 5px;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        list-style-type: none;
+
+        li {
+            padding: 0;
+            margin: 5px;
+            width: 100px;
+            height: 100px;
+            background-color: #ffffff;
+            background-size: 100%; //this property permit to make the background image fit the li width (because of li ratio and cards.png ratio)
+            cursor: pointer;
+
+            /*
+            once again, we use a media query to fix the li width and height for smaller (and not so smaller) screen
+            */
+            @include md {
+                width: 50px;
+                height: 50px;
+            }
+
+            /*
+            maybe the trickiest part of this scss file.
+            we use the fruits list and a sass each loop to generate the needed rules for each game card
+            we also use a media query and 
+            */
+            $decal: 0;
+
+            @each $fruit in $fruits {
+                &.#{$fruit} {
+                    background-position-y: #{-$decal}px;
+
+                    @include md {
+                        background-position-y: #{-$decal * 0.5}px;
+                    }
+
+                }
+
+                $decal: $decal+100;
+            }
+
+            /*
+            only cards which have been found and have been click in this game turn should visible
+            it's why only these cards use a background-image property
+            they are also unclickable (in fact the are but nothing happen), we must let it feel to the user.
+            */
+            &.show,
+            &.found {
+                background-image: url("../img/cards.png");
+                cursor: default;
+            }
+
+
+        }
+    }
+}
+
+/*
+oldschool css way to manage a progress bar
+here we use a nested element (.timer__scrollbar) with a percent width 
+so its width depend on its parent.
+As you can notice, width is here set to 0 which mean 0% (as 1 means 100%)
+*/
+.timer {
+    margin: 20px 0;
+
+    .timer__outline {
+        width: 80%;
+        border: solid 1px $title-background-color;
+        margin: auto;
+        overflow: hidden;
+
+        .timer__scrollbar {
+            background-color: red;
+            height: 10px;
+            width: 0;
+        }
+
+    }
+}
+
+
+.best-scores {
+    display: flex;
+    flex-direction: column;
+    margin: 30px;
+
+    .best-scores__title {
+        font-size: 20px;
+        margin: 0;
+    }
+
+    .best-scores__scores ul {
+        list-style-type: none;
+        padding: 0;
+        margin: 30px 0;
+
+        li {
+            text-align: center;
+            font-size: 16px;
+
+            /*
+            here we show a way to decorate an element using before and after pseudo class
+            */
+            &:before {
+                content: " - ";
+            }
+
+            &:after {
+                content: " - ";
+            }
+
+            /*
+            and here a way to best show the 'high score' with another pseudo class
+            */
+            &:first-child {
+                font-weight: bold;
+            }
+        }
+    }
+
+
+
+}
